@@ -25,7 +25,6 @@ public class TextBoxTests {
                userNumber = "1234567890",
                subjectsInput = "some Subjects",
                currentAddress = "some user address 74";
-        //String firstName = "some user";
 
         open("https://demoqa.com/automation-practice-form");
 
