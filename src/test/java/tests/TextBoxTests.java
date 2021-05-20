@@ -1,13 +1,18 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
+//import com.codeborne.selenide.SelenideElement;
+//import com.codeborne.selenide.commands.Click;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+//import org.openqa.selenium.By;
+
+import java.io.File;
 
 import static com.codeborne.selenide.Condition.text;
+//import static com.codeborne.selenide.Selectors.byCssSelector;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class TextBoxTests {
 
@@ -15,77 +20,55 @@ public class TextBoxTests {
     static void setup() {
         Configuration.startMaximized = true;
     }
-//123123123
+
     @Test
     void successfulSubmitFormTest() {
-        open("https://demoqa.com/text-box");
+        String firstName = "Firstname",
+               lastName = "Lastname",
+               userEmail = "test@test.ru",
+               userNumber = "1234567890",
+               subjectsInput = "some Subjects",
+               currentAddress = "some user address 74";
+        //String firstName = "some user";
 
-        $("[id=userName]").setValue("some user");
-        $("[id=userEmail]").setValue("someemail@mail.ma");
-        $("[id=currentAddress]").setValue("some user address 74");
-        $("[id=permanentAddress]").setValue("some user no i dont have");
+        open("https://demoqa.com/automation-practice-form");
+
+        $("[id=firstName]").setValue(firstName);
+        $("[id=lastName]").setValue(lastName);
+        $("[id=userEmail]").setValue(userEmail);
+        $("[id=gender-radio-1]").parent().click();
+        $("[id=userNumber]").setValue(userNumber);
+
+        //dateOfBirthInput
+        //$("[id=dateOfBirthInput]").setDateByName("recurrent.startDate", "16.01.2009");
+
+        //subjectsContainer
+        $("[id=subjectsInput]").setValue(subjectsInput);
+
+        //hobbies-checkbox-1
+        $("[id=hobbies-checkbox-1]").parent().click();
+
+        //uploadPicture
+        $("#uploadPicture").uploadFile(new File("src/test/java/tests/HP_G8.PNG"));
+
+        $("[id=currentAddress]").setValue(currentAddress);
+
+        $("[id=state]").parent().click();
+        $(byText("Haryana")).click();
+        $("[id=city]").parent().click();
+        $(byText("Karnal")).click();
+
         $("[id=submit]").click();
 
-        $("[id=name]").shouldHave(text("Name:"), text("some user"));
-        $("[id=email]").shouldHave(text("Email:"), text("someemail@mail.ma"));
-        $("[id=currentAddress]", 1).shouldHave(
-                text("Current Address :"), text("some user address 74"));
-        $("p[id=permanentAddress]").shouldHave(
-                text("Permananet Address :"), text("some user no i dont have"));
-    }
+        $(".table").shouldHave(text(firstName), text(lastName), text(userEmail), text(userNumber), text("Male"),
+                text("20 May,2021"), text("Sports"), text("HP_G8.PNG"), text(currentAddress), text("Haryana Karnal"));
 
-    @Test
-    void successfulSubmitFormWithVariablesTest() {
-        String userName = "some user";
+        //closeLargeModal
+        $("[id=closeLargeModal]").click();
 
-        open("https://demoqa.com/text-box");
-
-        $("[id=userName]").setValue(userName);
-        $("[id=userEmail]").setValue("someemail@mail.ma");
-        $("[id=currentAddress]").setValue("some user address 74");
-        $("[id=permanentAddress]").setValue("some user no i dont have");
-        $("[id=submit]").click();
-
-        $("[id=name]").shouldHave(text("Name:"), text(userName));
-        $("[id=email]").shouldHave(text("Email:"), text("someemail@mail.ma"));
-        $("[id=currentAddress]", 1).shouldHave(
-                text("Current Address :"), text("some user address 74"));
-        $("p[id=permanentAddress]").shouldHave(
-                text("Permananet Address :"), text("some user no i dont have"));
-    }
-
-    @Test
-    void successfulSubmitFormSearchInOutputTest() {
-        String userName = "some user";
-
-        open("https://demoqa.com/text-box");
-
-        $("[id=userName]").setValue(userName);
-        $("[id=userEmail]").setValue("someemail@mail.ma");
-        $("[id=currentAddress]").setValue("some user address 74");
-        $("[id=permanentAddress]").setValue("some user no i dont have");
-        $("[id=submit]").click();
-
-        $("[id=output]").shouldHave(text(userName), text("someemail@mail.ma"),
-                text("some user address 74"), text("some user no i dont have"));
     }
 
 
-    @Test
-    void successfulSubmitFormWithBadLocatorsTest() {
-        String userName = "some user";
-
-        open("https://demoqa.com/text-box");
-
-        $("[id=userName]").setValue(userName);
-        $("[placeholder=\"name@example.com\"]").setValue("someemail@mail.ma");
-        $("textarea").setValue("some user address 74");
-        $(".form-control", 3).setValue("some user no i dont have");
-        $(byText("Submit")).click();
-
-        $("[id=output]").shouldHave(text(userName), text("someemail@mail.ma"),
-                text("some user address 74"), text("some user no i dont have"));
-    }
 
 
 }
