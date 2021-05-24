@@ -58,7 +58,7 @@ public class TextBoxTests {
         $("[id=submit]").click();
 
         $(".table").shouldHave(text(firstName), text(lastName), text(userEmail), text(userNumber),
-                text("Male"), text(day + " " + month + "," + year), text("Economics"), text("Sports"), text("HP_G8.PNG"),
+                text("Male"), text(day + " " + month + "," + year), text(subjectsInput), text("Sports"), text("HP_G8.PNG"),
                 text(currentAddress), text(state + " " + city));
         $("[id=closeLargeModal]").click();
     }
