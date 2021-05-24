@@ -4,6 +4,8 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.io.File;
+import java.util.Calendar;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -17,11 +19,12 @@ public class TextBoxTests {
 
     @Test
     void successfulSubmitFormTest() {
+
         String firstName = "Firstname",
                lastName = "Lastname",
                userEmail = "test@test.ru",
                userNumber = "1234567890",
-               subjectsInput = "some Subjects",
+               subjectsInput = "Economics",
                currentAddress = "some user address 74",
                 month = "May",
                 year = "1998",
@@ -44,7 +47,7 @@ public class TextBoxTests {
         $(".react-datepicker__year-select").selectOption(year);
         $("[aria-label='Choose Thursday, May 14th, 1998']").click();
 
-        $("[id=subjectsInput]").setValue(subjectsInput);
+        $("[id=subjectsInput]").setValue(subjectsInput).pressEnter();
         $("[id=hobbies-checkbox-1]").parent().click();
         $("#uploadPicture").uploadFile(new File(picture));
         $("[id=currentAddress]").setValue(currentAddress);
@@ -55,7 +58,7 @@ public class TextBoxTests {
         $("[id=submit]").click();
 
         $(".table").shouldHave(text(firstName), text(lastName), text(userEmail), text(userNumber),
-                text("Male"), text(day + " " + month + "," + year), text("Sports"), text("HP_G8.PNG"),
+                text("Male"), text(day + " " + month + "," + year), text("Economics"), text("Sports"), text("HP_G8.PNG"),
                 text(currentAddress), text(state + " " + city));
         $("[id=closeLargeModal]").click();
     }
