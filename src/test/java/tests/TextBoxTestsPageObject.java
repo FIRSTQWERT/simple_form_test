@@ -19,7 +19,7 @@ public class TextBoxTestsPageObject {
     String firstName = faker.name().firstName(),
             lastName = faker.name().lastName(),
             userEmail = faker.internet().emailAddress(),
-            userNumber = faker.phoneNumber().cellPhone(),
+            userNumber = "1234567890",
             subjectsInput = "Economics",
             currentAddress = faker.address().fullAddress(),
             month = "May",
