@@ -1,6 +1,7 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import pages.registrationpage;
@@ -9,17 +10,18 @@ import java.io.File;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class TextBoxTestsPageObject {
 
-    String firstName = "Firstname",
-            lastName = "Lastname",
-            userEmail = "test@test.ru",
-            userNumber = "1234567890",
+    Faker faker = new Faker();
+
+    String firstName = faker.name().firstName(),
+            lastName = faker.name().lastName(),
+            userEmail = faker.internet().emailAddress(),
+            userNumber = faker.phoneNumber().cellPhone(),
             subjectsInput = "Economics",
-            currentAddress = "some user address 74",
+            currentAddress = faker.address().fullAddress(),
             month = "May",
             year = "1998",
             day = "14",
